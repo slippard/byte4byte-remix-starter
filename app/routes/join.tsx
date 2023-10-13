@@ -1,171 +1,86 @@
-import type {
-  ActionFunctionArgs,
-  LoaderFunctionArgs,
-  MetaFunction,
-} from "@remix-run/node";
+import type { LoaderFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
-import { useEffect, useRef } from "react";
+import { Form, useActionData } from "@remix-run/react";
+import * as React from "react";
 
-import { createUser, getUserByEmail } from "~/models/user.server";
-import { createUserSession, getUserId } from "~/session.server";
-import { safeRedirect, validateEmail } from "~/utils";
+import SideBar from "~/components/sidebar";
+import { getUserId } from "~/session.server";
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
+import { checkCode } from "../models/code.server";
+
+
+export async function loader({ request }: LoaderFunctionArgs) {
   const userId = await getUserId(request);
   if (userId) return redirect("/");
   return json({});
-};
+}
 
-export const action = async ({ request }: ActionFunctionArgs) => {
+export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
-  const email = formData.get("email");
-  const password = formData.get("password");
-  const redirectTo = safeRedirect(formData.get("redirectTo"), "/");
+  const code = formData.get("code");
 
-  if (!validateEmail(email)) {
-    return json(
-      { errors: { email: "Email is invalid", password: null } },
-      { status: 400 },
-    );
+  if (typeof code !== "string" || code.length === 0) {
+    return json({ status: 200, message: "Invalid Code" })
   }
 
-  if (typeof password !== "string" || password.length === 0) {
-    return json(
-      { errors: { email: null, password: "Password is required" } },
-      { status: 400 },
-    );
+  const codeResponse = await checkCode(code);
+
+  if (!codeResponse) {
+    return json({ status: 200, message: "Invalid Code" })
   }
 
-  if (password.length < 8) {
-    return json(
-      { errors: { email: null, password: "Password is too short" } },
-      { status: 400 },
-    );
+  if (codeResponse.status === 200) {
+    return json({ status: 200, message: codeResponse.message })
   }
 
-  const existingUser = await getUserByEmail(email);
-  if (existingUser) {
-    return json(
-      {
-        errors: {
-          email: "A user already exists with this email",
-          password: null,
-        },
-      },
-      { status: 400 },
-    );
+  if (codeResponse.status === 418) {
+    return json({ status: 418, message: codeResponse.message })
   }
 
-  const user = await createUser(email, password);
+  return json({ status: 418, message: "Invalid Code" })
 
-  return createUserSession({
-    redirectTo,
-    remember: false,
-    request,
-    userId: user.id,
-  });
-};
 
-export const meta: MetaFunction = () => [{ title: "Sign Up" }];
+}
 
 export default function Join() {
-  const [searchParams] = useSearchParams();
-  const redirectTo = searchParams.get("redirectTo") ?? undefined;
   const actionData = useActionData<typeof action>();
-  const emailRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
+  const codeRef = React.useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    if (actionData?.errors?.email) {
-      emailRef.current?.focus();
-    } else if (actionData?.errors?.password) {
-      passwordRef.current?.focus();
+  React.useEffect(() => {
+    if (actionData?.status === 418) {
+      codeRef.current?.focus()
+    }
+    if (!actionData) {
+      codeRef.current?.focus()
     }
   }, [actionData]);
 
   return (
-    <div className="flex min-h-full flex-col justify-center">
-      <div className="mx-auto w-full max-w-md px-8">
-        <Form method="post" className="space-y-6">
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Email address
-            </label>
-            <div className="mt-1">
-              <input
-                ref={emailRef}
-                id="email"
-                required
-                // eslint-disable-next-line jsx-a11y/no-autofocus
-                autoFocus={true}
-                name="email"
-                type="email"
-                autoComplete="email"
-                aria-invalid={actionData?.errors?.email ? true : undefined}
-                aria-describedby="email-error"
-                className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
-              />
-              {actionData?.errors?.email ? (
-                <div className="pt-1 text-red-700" id="email-error">
-                  {actionData.errors.email}
-                </div>
-              ) : null}
-            </div>
-          </div>
-
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Password
-            </label>
-            <div className="mt-1">
-              <input
-                id="password"
-                ref={passwordRef}
-                name="password"
-                type="password"
-                autoComplete="new-password"
-                aria-invalid={actionData?.errors?.password ? true : undefined}
-                aria-describedby="password-error"
-                className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
-              />
-              {actionData?.errors?.password ? (
-                <div className="pt-1 text-red-700" id="password-error">
-                  {actionData.errors.password}
-                </div>
-              ) : null}
-            </div>
-          </div>
-
-          <input type="hidden" name="redirectTo" value={redirectTo} />
-          <button
-            type="submit"
-            className="w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400"
-          >
-            Create Account
-          </button>
-          <div className="flex items-center justify-center">
-            <div className="text-center text-sm text-gray-500">
-              Already have an account?{" "}
-              <Link
-                className="text-blue-500 underline"
-                to={{
-                  pathname: "/login",
-                  search: searchParams.toString(),
-                }}
-              >
-                Log in
-              </Link>
-            </div>
-          </div>
-        </Form>
+    <div className="bg-gray-900">
+      <div className="absolute z-10 top-0 left-0 right-0 opacity-100 ">
+        <SideBar />
       </div>
+      <section className="h-screen bg-cover opacity-90 bg-[url('https://images.unsplash.com/photo-1542396601-dca920ea2807?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1502&q=80')]">
+        <div className="flex h-full w-full items-center justify-center container mx-auto px-8">
+          <div className="max-w-2xl text-center">
+            <h1 className="text-3xl sm:text-5xl capitalize tracking-widest text-white lg:text-7xl">Registration is currently closed.</h1>
+
+            <p className="mt-6 lg:text-lg text-white">If an account was created for you, its credentials will be included in an email.</p>
+            <p className="mt-6 lg:text-lg text-white">If you have a code, enter it below.</p>
+
+            {actionData?.status === 418 ?
+              <div className="w-fit mx-auto px-4 py-2 text-red-500 text-lg tracking-wider bg-gray-900 bg-opacity-90 rounded-md">
+                {actionData.message}
+              </div> : null}
+
+            <Form method="post" className="mt-8 flex flex-col space-y-3 sm:-mx-2 sm:flex-row sm:justify-center sm:space-y-0">
+              <input ref={codeRef} name="code" required type="text" className="rounded-md border border-transparent bg-white/20 px-4 py-2 text-white placeholder-white backdrop-blur-sm focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 sm:mx-2" placeholder="Enter Code" />
+
+              <button type="submit" className="transform rounded-md bg-blue-700 px-8 py-2 text-sm font-medium capitalize tracking-wide text-white transition-colors duration-200 hover:bg-blue-600 focus:bg-blue-600 focus:outline-none sm:mx-2">Submit</button>
+            </Form>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

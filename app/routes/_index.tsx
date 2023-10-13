@@ -1,15 +1,15 @@
 import type { MetaFunction } from "@remix-run/node";
-import { FaBars } from 'react-icons/fa'
 
-export const meta: MetaFunction = () => [{ title: "Remix Notes" }];
+import SideBar from "~/components/sidebar";
+
+export const meta: MetaFunction = () => [{ title: "Remix Rentals" }];
 
 export default function Index() {
   // const user = useOptionalUser();
   return (
     <main className="relative min-h-screen bg-cover flex flex-col justify-center items-center bg-[url('https://farm9.staticflickr.com/8760/17195790401_ceeeafcddb_o.jpg')]">
-      <div className="absolute top-2 right-2">
-        <FaBars className="h-10 w-10 text-gray-200 opacity-70" />
-      </div>
+      <SideBar />
+
       <svg viewBox="0 0 100 20">
         <defs>
           <linearGradient id="gradient" x1="0" x2="0" y1="0" y2="1">
