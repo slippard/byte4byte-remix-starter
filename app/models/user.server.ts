@@ -28,6 +28,10 @@ export async function createUser(email: User["email"], password: string) {
   });
 }
 
+export const setUserAdmin = ({ userId, admin }: { userId: string, admin: boolean }) => {
+  return prisma.user.update({ where: { id: userId }, data: { admin } })
+}
+
 export async function deleteUserByEmail(email: User["email"]) {
   return prisma.user.delete({ where: { email } });
 }
