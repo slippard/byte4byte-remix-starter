@@ -1,5 +1,9 @@
 import { prisma } from "~/db.server"
 
+/* export const getColorScheme = () => {
+  
+} */
+
 export const sendMessage = ({ name, phone, message }: { name: string, phone: string, message: string }) => {
     /* use nodemailer or someting to send email */
 

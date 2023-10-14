@@ -17,6 +17,10 @@ export async function getUserCount() {
   return (await prisma.user.findMany()).length
 }
 
+export async function userCountList() {
+  return prisma.user.findMany({ select: { email: true, createdAt: true, id: true, updatedAt: true, admin: true } })
+}
+
 export async function createUser(email: User["email"], password: string) {
   const hashedPassword = await bcrypt.hash(password, 10);
 

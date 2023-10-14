@@ -22,7 +22,7 @@ export default function DashboardIndex() {
         <div>
             <div className="flex bg-gray-100 text-gray-900">
 
-                <aside className="flex h-screen w-20 flex-col items-center border-r border-gray-200 bg-white">
+                <aside className="flex h-screen w-20 flex-col items-center border-r border-gray-200 bg-gray-50">
                     <nav className="flex flex-1 flex-col gap-y-4 pt-10">
                         <a href="/" className={`text-gary-400 bg-gray-100 group relative rounded-xl p-2 z-20 hover:scale-105 hover:bg-gray-200 hover:shadow-md ease-in-out duration-300`}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -91,7 +91,7 @@ export default function DashboardIndex() {
 
                     <div className="flex flex-col items-center gap-y-4 py-10">
                         <Form method='post' action='/logout' className='tooltip' data-tip="Logout">
-                            <button type="submit"><BiLogOutCircle className='h-8 w-8 text-red-600' /></button>
+                            <button type="submit"><BiLogOutCircle className='h-10 w-10 text-red-600 bg-gray-200 rounded-full p-1' /></button>
                         </Form>
                     </div>
                 </aside>

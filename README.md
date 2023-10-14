@@ -16,6 +16,7 @@ This stack offers a solution that should be simple enough to deploy  a simple ap
 - Database ORM with [Prisma](https://prisma.io)
 - Styling with [Tailwind](https://tailwindcss.com/)
 - Component styling with [DaisyUI](https://daisyui.com/components/)
+- Additional Components  with [HeadlessUI](https://headlessui.com)
 - Additional Icons From [React Icons](https://react-icons.github.io/react-icons/)
 - [HeroIcons](https://heroicons.com/) Additional SVG Library 
 - Local third party request mocking with [MSW](https://mswjs.io)
