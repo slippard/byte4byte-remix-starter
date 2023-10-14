@@ -1,4 +1,4 @@
-app = "remi-rentals-template"
+app = "byte4byte-remix-starter"
 
 kill_signal = "SIGINT"
 kill_timeout = 5

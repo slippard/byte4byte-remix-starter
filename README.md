@@ -1,4 +1,4 @@
-# Small Town Remix
+# byte4byte-remix-starter
 
 I've seen many small businesses struggle to bend website builders into something that can represent their brand, but it nearly always falls short. Simply because a website builder can't be **made for your company** when it's **built to work for every company**. They obviously need to cater to many industries, and therefore it's challenging to meet each individual business's needs. Many companies need to upload files, but how they choose to encrypt, store, backup, etc. traditionally lies with the company they pay huge amounts of money to that claims to secure their data.
 
