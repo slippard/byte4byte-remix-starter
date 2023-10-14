@@ -1,14 +1,23 @@
-# Remix Rentals
+# Small Town Remix
+
+I've seen many small businesses struggle to bend website builders into something that can represent their brand, but it nearly always falls short. Simply because a website builder can't be **made for your company** when it's **built to work for every company**. They obviously need to cater to many industries, and therefore it's challenging to meet each individual business's needs. Many companies need to upload files, but how they choose to encrypt, store, backup, etc. traditionally lies with the company they pay huge amounts of money to that claims to secure their data.
+
+This stack offers a solution that should be simple enough to deploy  a simple application with potentially advanced features without breaking the bank. The data collected is easily accessed and owned by you. Within the tier parameters, you can get away with only paying about $5/mo for the object storage, and even that is technically optional if you'd rather [rely on fly volume storage](https://fly.io/docs/apps/scale-count/#scale-an-app-with-volumes) which isn't typically recommended unless you're ready to manually back up & restore the database. If you already own your domain, have access to its DNS, and your Fly app incurs under $5 usage, it's written off as a free hobby project. The project grows in cost as the flow of data and users increases within the app, allowing for a much lower entry cost and an easy entry point for various developers to start with and branch off in different directions. It allows the business to invest their money into a design that matches their style and components that enhance their daily workload.
 
 ## What's in the stack
 
 - [Fly app deployment](https://fly.io) with [Docker](https://www.docker.com/)
 - Production-ready [SQLite Database](https://sqlite.org)
+- Privacy first metrics thanks to [Plausible](https://plausible.io)
+- Scalable object storage made easy thanks to [Digital Ocean Spaces](https://www.digitalocean.com/products/spaces)
 - Healthcheck endpoint for [Fly backups region fallbacks](https://fly.io/docs/reference/configuration/#services-http_checks)
 - [GitHub Actions](https://github.com/features/actions) for deploy on merge to production and staging environments
 - Email/Password Authentication with [cookie-based sessions](https://remix.run/utils/sessions#md-createcookiesessionstorage)
 - Database ORM with [Prisma](https://prisma.io)
 - Styling with [Tailwind](https://tailwindcss.com/)
+- Component styling with [DaisyUI](https://daisyui.com/components/)
+- Additional Icons From [React Icons](https://react-icons.github.io/react-icons/)
+- [HeroIcons](https://heroicons.com/) Additional SVG Library 
 - Local third party request mocking with [MSW](https://mswjs.io)
 - Unit testing with [Vitest](https://vitest.dev) and [Testing Library](https://testing-library.com)
 - Code formatting with [Prettier](https://prettier.io)
