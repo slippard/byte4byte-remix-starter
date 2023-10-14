@@ -31,6 +31,9 @@ export default function App() {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+        {/* Plausible script */}
+        <script defer data-domain="byte4byte-remix-starter.fly.dev" src="https://plausible.io/js/script.js"></script>
         <Meta />
         <Links />
       </head>

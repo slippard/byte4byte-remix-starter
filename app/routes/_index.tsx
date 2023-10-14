@@ -2,7 +2,7 @@ import type { MetaFunction } from "@remix-run/node";
 
 import SideBar from "~/components/sidebar";
 
-export const meta: MetaFunction = () => [{ title: "Remix Rentals" }];
+export const meta: MetaFunction = () => [{ title: "byte4byte remix starter" }];
 
 export default function Index() {
   // const user = useOptionalUser();
