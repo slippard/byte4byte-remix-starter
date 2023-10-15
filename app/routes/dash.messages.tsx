@@ -19,7 +19,7 @@ export async function action({ request }: ActionFunctionArgs) {
         if (typeof messageId != "string" || messageId.length <= 2) {
             return json({ status: 418, message: "Invalid messageId" })
         }
-        let message = await deleteMessageById(messageId)
+        const message = await deleteMessageById(messageId)
         return json({ status: 200, message: `Deleted ${message.id}` })
     }
 
