@@ -32,6 +32,21 @@ export default function App() {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
 
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="application-name" content="slippard" />
+        <meta name="apple-mobile-web-app-title" content="slippard" />
+        <meta name="theme-color" content="#333" />
+        <meta name="msapplication-navbutton-color" content="#333" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="msapplication-starturl" content="/" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+        <link rel="icon" type="image/png" sizes="512x512" href="https://nyc3.digitaloceanspaces.com/slippard/assets/enso-512-inverted.png" />
+        <link rel="apple-touch-icon" type="image/png" sizes="512x512" href="https://nyc3.digitaloceanspaces.com/slippard/assets/enso-512-inverted.png"></link>
+        <Meta />
+        <link rel="manifest" href="https://nyc3.digitaloceanspaces.com/slippard/assets/manifest.json" />
+
         {/* Plausible script */}
         <script defer data-domain="byte4byte-remix-starter.fly.dev" src="https://plausible.io/js/script.js"></script>
         <Meta />

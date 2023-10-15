@@ -1,0 +1,15 @@
+{
+    "name": "byte4byte-remix-starter",
+    "short_name": "byte4byte",
+    "start_url": "/",
+    "lang": "en-US",
+    "theme_color": "#333",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "https://nyc3.digitaloceanspaces.com/slippard/assets/enso-512-inverted.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
