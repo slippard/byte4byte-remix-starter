@@ -65,7 +65,6 @@ export default function Join() {
           <div className="max-w-2xl text-center">
             <h1 className="text-3xl sm:text-5xl capitalize tracking-widest text-white lg:text-7xl">Registration is currently closed.</h1>
 
-            <p className="mt-6 lg:text-lg text-white">If an account was created for you, its credentials will be included in an email.</p>
             <p className="mt-6 lg:text-lg text-white">If you have a code, enter it below.</p>
 
             {actionData?.status === 418 ?

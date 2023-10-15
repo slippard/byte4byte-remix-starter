@@ -28,10 +28,10 @@ export default function DashboardMetricsPage() {
     return (
         <div className="w-full h-screen flex flex-col overflow-hidden overflow-y-scroll py-8">
 
-            <div className="w-full px-8 max-w-7xl">
-                <div className="w-full inline-flex items-center px-4 gap-4 bg-yellow-200 border border-yellow-300 rounded-lg">
-                    <MdWarning />
-                    <p className="text-yellow-900">This is a live demo that showcases the current features of the platform.</p>
+            <div className="w-full px-8 max-w-7xl mb-4">
+                <div className="w-full grid grid-cols-12 items-center px-4 gap-4 bg-yellow-200 border border-yellow-300 rounded-lg">
+                    <MdWarning className="col-span-1" />
+                    <p className="text-yellow-900 col-span-11">This is a live demo that showcases the current features of the platform.</p>
                 </div>
             </div>
 
