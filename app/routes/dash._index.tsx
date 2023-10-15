@@ -4,7 +4,7 @@ import { BiMicrophone } from "react-icons/bi";
 import { FaBrain, FaSpellCheck, FaMousePointer } from 'react-icons/fa'
 import { GrUserAdmin } from 'react-icons/gr'
 import { HiUserGroup } from 'react-icons/hi'
-import { MdAccessTimeFilled } from 'react-icons/md'
+import { MdAccessTimeFilled, MdWarning } from 'react-icons/md'
 import { TbArrowBounce } from 'react-icons/tb'
 
 // import { PopupForm } from "~/components/PopupForm";
@@ -26,13 +26,21 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export default function DashboardMetricsPage() {
     const data = useLoaderData<typeof loader>()
     return (
-        <div className="w-full h-screen flex flex-col overflow-y-scroll py-8">
-            <div className="w-full inline-flex justify-between items-center px-8 pb-4">
+        <div className="w-full h-screen flex flex-col overflow-hidden overflow-y-scroll py-8">
+
+            <div className="w-full px-8 max-w-7xl">
+                <div className="w-full inline-flex items-center px-4 gap-4 bg-yellow-200 border border-yellow-300 rounded-lg">
+                    <MdWarning />
+                    <p className="text-yellow-900">This is a live demo that showcases the current features of the platform.</p>
+                </div>
+            </div>
+
+            <div className="w-full inline-flex justify-between items-center px-8 pb-4 max-w-7xl">
                 <h1 className="text-3xl">Metrics</h1>
                 <Link to="/dash/metrics" className="px-2 py-1.5 text-gray-500 rounded-md border border-gray-300">View&nbsp;All</Link>
             </div>
-            <div className="my-4 px-8 py-4 w-full grid grid-cols-4 gap-4">
 
+            <div className="my-4 px-8 py-4 w-full grid grid-cols-4 gap-4 max-w-7xl">
                 <div data-tip="Total visitors over last 30 days" className="tooltip tooltip-warning col-span-4 sm:col-span-2 lg:col-span-1 bg-blue-200 text-blue-900 border border-blue-300 shadow-blue-300 to-white/5 p-6 rounded-lg ease-in-out duration-300 shadow hover:shadow-lg">
                     <div className="flex flex-row space-x-4 items-center">
                         <div className="text-3xl">
@@ -91,7 +99,7 @@ export default function DashboardMetricsPage() {
 
             </div>
 
-            <div className="w-full inline-flex justify-between items-center px-8 pb-4">
+            <div className="w-full inline-flex justify-between items-center px-8 pb-4 max-w-7xl">
                 <h1 className="text-3xl">User Management</h1>
                 <Link to="/dash/users" className="px-2 py-1.5 text-gray-500 rounded-md border border-gray-300">View&nbsp;All</Link>
             </div>
@@ -124,11 +132,11 @@ export default function DashboardMetricsPage() {
                 </div>
             </div>
 
-            <div className="w-full inline-flex justify-between items-center px-8 pb-4">
+            <div className="w-full inline-flex justify-between items-center px-8 pb-4 max-w-7xl">
                 <h1 className="text-3xl">Tools</h1>
             </div>
 
-            <div className="my-4 px-8 py-4 w-full grid grid-cols-4 gap-4">
+            <div className="my-4 px-8 py-4 w-full grid grid-cols-4 gap-4 max-w-7xl">
 
                 <a href="https://languagetool.org/" target="_blank" rel="noreferrer" className="col-span-4 sm:col-span-2 lg:col-span-1 bg-blue-200 text-blue-900 border border-blue-300 shadow-blue-300 to-white/5 p-6 rounded-lg ease-in-out duration-300 shadow hover:shadow-lg">
                     <div className="flex flex-row space-x-4 items-center">
