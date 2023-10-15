@@ -106,6 +106,14 @@ Prior to your first deployment, you'll need to do a few things:
 
   If you don't have openssl installed, you can also use [1Password](https://1password.com/password-generator) to generate a random secret, just replace `$(openssl rand -hex 32)` with the generated secret.
 
+- Add Plausible `PLAUSIBLE_SHARED_LINK` to your fly app secrets:
+
+  ```sh
+  fly secrets set PLAUSIBLE_SHARED_LINK=your-shared-link
+  ```
+
+  You can view your shared links in your plausible dashboard here: https://plausible.io/example.com/settings/visibility.
+
 - Create a persistent volume for the sqlite database for both your staging and production environments. Run the following:
 
   ```sh

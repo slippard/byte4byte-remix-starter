@@ -71,6 +71,39 @@ export default function DashboardIndex() {
                             </div>
                         </a>
 
+                        <a href="/dash/users" className={`${loc.pathname === "/dash/users" ? "shadow bg-purple-200 text-purple-800 hover:bg-purple-500 hover:text-purple-100" : "text-gary-400 bg-gray-100"} text-gary-400 bg-gray-100 group relative rounded-xl z-20 p-2 hover:scale-105 hover:bg-gray-200 hover:shadow-md ease-in-out duration-300`}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                            </svg>
+
+
+                            <div className="absolute inset-y-0 left-12 hidden items-center group-hover:flex">
+                                <div className="relative whitespace-nowrap rounded-md bg-white px-4 py-2 text-sm font-semibold text-gray-900 drop-shadow-lg">
+                                    <div className="absolute inset-0 -left-1 flex items-center">
+                                        <div className="h-2 w-2 rotate-45 bg-white"></div>
+                                    </div>
+                                    Users
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="/dash/tasklist" className={`${loc.pathname === "/dash/tasklist" ? "shadow bg-purple-200 text-purple-800 hover:bg-purple-500 hover:text-purple-100" : "text-gary-400 bg-gray-100"} text-gary-400 bg-gray-100 group relative rounded-xl z-20 p-2 hover:scale-105 hover:bg-gray-200 hover:shadow-md ease-in-out duration-300`}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                            </svg>
+
+
+
+                            <div className="absolute inset-y-0 left-12 hidden items-center group-hover:flex">
+                                <div className="relative whitespace-nowrap rounded-md bg-white px-4 py-2 text-sm font-semibold text-gray-900 drop-shadow-lg">
+                                    <div className="absolute inset-0 -left-1 flex items-center">
+                                        <div className="h-2 w-2 rotate-45 bg-white"></div>
+                                    </div>
+                                    Project Tasks
+                                </div>
+                            </div>
+                        </a>
+
                         <a href="/dash/messages" className={`${loc.pathname === "/dash/messages" ? "shadow bg-purple-200 text-purple-800 hover:bg-purple-500 hover:text-purple-100" : "text-gary-400 bg-gray-100"} text-gary-400 bg-gray-100 group z-20 relative rounded-xl p-2 hover:scale-105 hover:bg-gray-200 hover:shadow-md ease-in-out duration-300`}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
                                 <path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z" />

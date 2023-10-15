@@ -21,6 +21,29 @@ export async function userCountList() {
   return prisma.user.findMany({ select: { email: true, createdAt: true, id: true, updatedAt: true, admin: true } })
 }
 
+export async function updateUserEmailById(id: User["id"], email: User["email"]) {
+  return prisma.user.update({
+    where: { id },
+    data: {
+      email
+    }
+  })
+}
+
+export async function updateUserPasswordById(id: User["id"], password: string) {
+  const newPass = await bcrypt.hash(password, 10);
+  return prisma.user.update({
+    where: { id },
+    data: {
+      password: {
+        update: {
+          hash: newPass
+        }
+      }
+    }
+  })
+}
+
 export async function createUser(email: User["email"], password: string) {
   const hashedPassword = await bcrypt.hash(password, 10);
 

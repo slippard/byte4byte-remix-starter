@@ -1,3 +1,4 @@
+import { Form } from '@remix-run/react'
 import { useState } from 'react'
 
 import { useOptionalUser } from '~/utils'
@@ -28,9 +29,14 @@ function SideBar() {
                             <a className="text-3xl text-gray-800 hover:text-gray-600" onClick={() => setShowMenu(false)} href="/">Home</a>
                             <a className="text-3xl text-gray-800 hover:text-gray-600" onClick={() => setShowMenu(false)} href="/about">About</a>
                             <a className="text-3xl text-gray-800 hover:text-gray-600" onClick={() => setShowMenu(false)} href="/contact">Contact</a>
-                            <hr className='w-full max-w-xs h-[2px] bg-gray-400 rounded-xl px-20'/>
+                            <hr className='w-full max-w-xs h-[2px] bg-gray-400 rounded-xl px-20' />
                             {user?.id ?
-                                <a className="text-3xl text-gray-800 hover:text-gray-600" onClick={() => setShowMenu(false)} href="/dash">Dashboard</a>
+                                <>
+                                    <a className="text-3xl text-gray-800 hover:text-gray-600" onClick={() => setShowMenu(false)} href="/dash">Dashboard</a>
+                                    <Form method='post' action='/logout'>
+                                        <button className='text-3xl text-gray-800 hover:text-gray-600' type="submit">Logout</button>
+                                    </Form>
+                                </>
                                 :
                                 <a className="text-3xl text-gray-800 hover:text-gray-600" onClick={() => setShowMenu(false)} href="/login">Login</a>
                             }

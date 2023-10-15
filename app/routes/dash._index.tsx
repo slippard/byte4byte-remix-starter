@@ -1,5 +1,5 @@
 import type { LoaderFunctionArgs } from "@remix-run/node"
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import { BiMicrophone } from "react-icons/bi";
 import { FaBrain, FaSpellCheck, FaMousePointer } from 'react-icons/fa'
 import { GrUserAdmin } from 'react-icons/gr'
@@ -11,24 +11,29 @@ import { TbArrowBounce } from 'react-icons/tb'
 import { getPlausibleStats } from "~/models/metrics.server";
 import { userCountList } from "~/models/user.server";
 import { requireUser } from "~/session.server";
+import { secondsToDhms } from "~/utils";
 // import { useOptionalUser } from "~/utils";
 
 export async function loader({ request }: LoaderFunctionArgs) {
     const user = await requireUser(request)
     const userList = await userCountList();
     const stats = await getPlausibleStats({ site: "byte4byte-remix-starter.fly.dev" })
+    const visitTime = secondsToDhms(stats.results.visit_duration.value)
     const plausibleSharedLink = process.env.PLAUSIBLE_SHARED_LINK || "https://plausible.io/share/byte4byte-remix-starter.fly.dev?auth=KphzHFSWVH9EXTbDDDX3e"
-    return { user, plausibleSharedLink, userList, stats }
+    return { user, plausibleSharedLink, userList, stats, visitTime }
 };
 
 export default function DashboardMetricsPage() {
     const data = useLoaderData<typeof loader>()
     return (
-        <div className="w-full h-screen flex flex-col overflow-hidden py-8">
-            <h1 className="text-3xl px-8">Metrics</h1>
+        <div className="w-full max-w-7xl h-screen flex flex-col overflow-hidden py-8">
+            <div className="w-full inline-flex justify-between items-center px-8 pb-4">
+                <h1 className="text-3xl">Metrics</h1>
+                <Link to="/dash/metrics" className="px-2 py-1.5 text-gray-500 rounded-md border border-gray-300">View&nbsp;All</Link>
+            </div>
             <div className="my-4 px-8 py-4 w-full grid grid-cols-4 gap-4">
 
-                <div className="col-span-4 sm:col-span-2 lg:col-span-1 bg-blue-200 text-blue-900 border border-blue-300 shadow-blue-300 to-white/5 p-6 rounded-lg ease-in-out duration-300 shadow hover:shadow-lg">
+                <div data-tip="Total visitors over last 30 days" className="tooltip col-span-4 sm:col-span-2 lg:col-span-1 bg-blue-200 text-blue-900 border border-blue-300 shadow-blue-300 to-white/5 p-6 rounded-lg ease-in-out duration-300 shadow hover:shadow-lg">
                     <div className="flex flex-row space-x-4 items-center">
                         <div className="text-3xl">
                             <HiUserGroup className='h-10 w-10' />
@@ -42,7 +47,7 @@ export default function DashboardMetricsPage() {
                     </div>
                 </div>
 
-                <div className="col-span-4 sm:col-span-2 lg:col-span-1 bg-blue-200 text-blue-900 border border-blue-300 shadow-blue-300 to-white/5 p-6 rounded-lg ease-in-out duration-300 shadow hover:shadow-lg">
+                <div data-tip="Total pageviews over last 30 days" className="tooltip col-span-4 sm:col-span-2 lg:col-span-1 bg-blue-200 text-blue-900 border border-blue-300 shadow-blue-300 to-white/5 p-6 rounded-lg ease-in-out duration-300 shadow hover:shadow-lg">
                     <div className="flex flex-row space-x-4 items-center">
                         <div className="text-3xl">
                             <FaMousePointer />
@@ -56,21 +61,7 @@ export default function DashboardMetricsPage() {
                     </div>
                 </div>
 
-                <div className="col-span-4 sm:col-span-2 lg:col-span-1 bg-blue-200 text-blue-900 border border-blue-300 shadow-blue-300 to-white/5 p-6 rounded-lg ease-in-out duration-300 shadow hover:shadow-lg">
-                    <div className="flex flex-row space-x-4 items-center">
-                        <div className="text-3xl">
-                            <MdAccessTimeFilled className='h-10 w-10' />
-                        </div>
-                        <div>
-                            <p className="text-sm font-mono font-medium uppercase leading-4">Visit Duration</p>
-                            <p className="font-bold text-2xl inline-flex items-center space-x-2">
-                                <span>{data.stats.results.visit_duration.value}</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="col-span-4 sm:col-span-2 lg:col-span-1 bg-blue-200 text-blue-900 border border-blue-300 shadow-blue-300 to-white/5 p-6 rounded-lg ease-in-out duration-300 shadow hover:shadow-lg">
+                <div data-tip="Bounce rate is the percentage of visitors who leave a website after viewing only one page. It indicates how frequently users visit your site without interacting or exploring further." className="tooltip col-span-4 sm:col-span-2 lg:col-span-1 bg-blue-200 text-blue-900 border border-blue-300 shadow-blue-300 to-white/5 p-6 rounded-lg ease-in-out duration-300 shadow hover:shadow-lg">
                     <div className="flex flex-row space-x-4 items-center">
                         <div className="text-3xl">
                             <TbArrowBounce className='h-10 w-10' />
@@ -78,7 +69,21 @@ export default function DashboardMetricsPage() {
                         <div>
                             <p className="text-sm font-mono font-medium uppercase leading-4">Bounce Rate</p>
                             <p className="font-bold text-2xl inline-flex items-center space-x-2">
-                                <span>{data.stats.results.bounce_rate.value}</span>
+                                <span>{data.stats.results.bounce_rate.value}%</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div data-tip="Average time spend on a page" className="tooltip col-span-4 sm:col-span-2 lg:col-span-1 bg-blue-200 text-blue-900 border border-blue-300 shadow-blue-300 to-white/5 p-6 rounded-lg ease-in-out duration-300 shadow hover:shadow-lg">
+                    <div className="flex flex-row space-x-4 items-center">
+                        <div className="text-3xl">
+                            <MdAccessTimeFilled className='h-10 w-10' />
+                        </div>
+                        <div>
+                            <p className="text-sm font-mono font-medium uppercase leading-4">Visit Duration</p>
+                            <p className="font-bold text-2xl inline-flex items-center space-x-2">
+                                <span>{data.visitTime}</span>
                             </p>
                         </div>
                     </div>
@@ -86,7 +91,10 @@ export default function DashboardMetricsPage() {
 
             </div>
 
-            <h1 className="px-8 text-3xl">User Management</h1>
+            <div className="w-full inline-flex justify-between items-center px-8 pb-4">
+                <h1 className="text-3xl">User Management</h1>
+                <Link to="/dash/users" className="px-2 py-1.5 text-gray-500 rounded-md border border-gray-300">View&nbsp;All</Link>
+            </div>
             <div className="my-4 px-8 py-4 w-full grid grid-cols-4 gap-4">
                 <div className="col-span-4 sm:col-span-2 lg:col-span-1 bg-green-200 text-green-900 border border-green-300 shadow-green-300 to-white/5 p-6 rounded-lg ease-in-out duration-300 shadow hover:shadow-lg">
                     <div className="flex flex-row space-x-4 items-center">
@@ -116,7 +124,9 @@ export default function DashboardMetricsPage() {
                 </div>
             </div>
 
-            <h1 className="px-8 text-3xl">Tools</h1>
+            <div className="w-full inline-flex justify-between items-center px-8 pb-4">
+                <h1 className="text-3xl">Tools</h1>
+            </div>
 
             <div className="my-4 px-8 py-4 w-full grid grid-cols-4 gap-4">
 

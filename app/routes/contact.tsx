@@ -83,7 +83,7 @@ export default function ContactPage() {
                     <div>
                         <h2 className="text-4xl lg:text-5xl font-bold leading-tight">Get In Touch</h2>
                         <div className="text-gray-700 mt-8">
-                            Hate forms? Send us an <a href="mailto:info@example.com" className="underline">email</a> instead.
+                            Dont like filling out forms? Send us an <a href="mailto:info@example.com" className="underline">email</a> instead.
                         </div>
                     </div>
                     <div className="mt-8 text-center">
