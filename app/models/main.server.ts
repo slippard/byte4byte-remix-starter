@@ -1,8 +1,6 @@
-import { prisma } from "~/db.server"
+import { ContactRequest } from "@prisma/client"
 
-/* export const getColorScheme = () => {
-  
-} */
+import { prisma } from "~/db.server"
 
 export const sendMessage = ({ name, phone, message }: { name: string, phone: string, message: string }) => {
     /* use nodemailer or someting to send email */
@@ -14,4 +12,8 @@ export const sendMessage = ({ name, phone, message }: { name: string, phone: str
             message
         }
     })
+}
+
+export const deleteMessageById = (id: ContactRequest["id"]) => {
+    return prisma.contactRequest.delete({ where: { id } })
 }

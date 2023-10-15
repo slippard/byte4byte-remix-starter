@@ -1,6 +1,6 @@
 import { type ActionFunctionArgs, json } from "@remix-run/node"
 import { Form, useActionData } from "@remix-run/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import { Form } from "@remix-run/react";
 // import { useRef } from "react";
 
@@ -50,6 +50,15 @@ export default function ContactPage() {
     const [name, setName] = useState("")
     const [phone, setPhone] = useState("")
     const [message, setMessage] = useState("")
+
+    useEffect(() => {
+        if (actionData?.status) {
+            setName("")
+            setPhone("")
+            setMessage("")
+        }
+    }, [])
+
 
     return (
         <div className="min-h-screen w-full bg-cover bg-center bg-[url('https://images.pexels.com/photos/3244513/pexels-photo-3244513.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')]">
