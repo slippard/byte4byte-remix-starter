@@ -3,7 +3,7 @@ import { useLoaderData, Form, useActionData } from "@remix-run/react";
 import { useRef, useState } from 'react'
 import { BiCog, BiError } from "react-icons/bi";
 
-import { createUser, deleteUserByEmail, getUserById, updateUserPasswordById, userCountList } from "~/models/user.server";
+import { createUser, deleteUserByEmail, getUserById, updateUserPasswordById, getUserList } from "~/models/user.server";
 import { requireUserId } from "~/session.server";
 
 export async function action({ request }: ActionFunctionArgs) {
@@ -76,7 +76,7 @@ export async function action({ request }: ActionFunctionArgs) {
 export async function loader({ request }: LoaderFunctionArgs) {
     const userId = await requireUserId(request)
     const user = await getUserById(userId)
-    const userList = await userCountList()
+    const userList = await getUserList()
     return { user, userList }
 };
 
@@ -108,7 +108,7 @@ export default function DashboardUsersPage() {
             }
 
             <dialog ref={newUserModal} className="modal">
-                <Form method="post" reloadDocument autoComplete="off" className="modal-box flex flex-col gap-4 bg-gray-200 border border-gray-400">
+                <Form method="post" reloadDocument autoComplete="off" className="modal-box flex flex-col gap-4 bg-gray-100 border border-gray-400">
                     <input type="hidden" name="_action" value="register-user" />
                     <input type="hidden" name="admin" value={isAdmin.toString()} />
 
@@ -133,7 +133,7 @@ export default function DashboardUsersPage() {
 
                     <div className="form-control">
                         <label className="cursor-pointer label">
-                            <span className="label-text">Administrator</span>
+                            <span className="label-text text-gray-800">Administrator</span>
                             <input type="checkbox" checked={isAdmin} onChange={() => setIsAdmin(!isAdmin)} className="checkbox checkbox-success" />
                         </label>
                     </div>
@@ -206,7 +206,7 @@ export default function DashboardUsersPage() {
 
                 <table className="hidden md:table table-xs border border-gray-400 rounded-lg">
                     <thead>
-                        <tr>
+                        <tr className="text-gray-800">
                             <th></th>
                             <th>Email</th>
                             <th>Type</th>
@@ -252,13 +252,17 @@ export default function DashboardUsersPage() {
                                                             <button type="submit" className='w-full px-4 py-2 rounded-md bg-green-200 border border-green-300 text-green-800 hover:bg-green-300 ease-in-out duration-300'>Update Password</button>
                                                         </Form>
 
-                                                        <Form method="post" reloadDocument className="p-2 rounded-lg bg-gray-100 shadow-md border border-gray-300">
-                                                            <input type="hidden" name="_action" value="delete-user" />
-                                                            <input type="hidden" name="userId" value={user.id} />
-                                                            {user.owner ?
+                                                        {user.owner ?
+                                                            <Form method="post" reloadDocument className="p-2 rounded-lg bg-gray-100 shadow-md border border-gray-300">
+                                                                <input type="hidden" name="_action" value="delete-user" />
                                                                 <button type="submit" disabled={user.owner} className='w-full px-4 py-2 rounded-md bg-red-200 text-red-800 hover:bg-red-300 ease-in-out duration-300'>{user.owner ? "Cannot Remove Owner" : "Delete User"}</button>
-                                                                : null}
-                                                        </Form>
+                                                                <input type="hidden" name="userId" value={user.id} />
+                                                            </Form>
+                                                            : <Form method="post" reloadDocument className="p-2 rounded-lg bg-gray-100 shadow-md border border-gray-300">
+                                                                <input type="hidden" name="_action" value="delete-user" />
+                                                                <button type="submit" disabled={user.owner} className='w-full px-4 py-2 rounded-md bg-red-200 text-red-800 hover:bg-red-300 ease-in-out duration-300'>{user.owner ? "Cannot Remove Owner" : "Delete User"}</button>
+                                                                <input type="hidden" name="userId" value={user.id} />
+                                                            </Form>}
 
                                                     </div>
                                                 )
@@ -269,7 +273,7 @@ export default function DashboardUsersPage() {
                         })}
                     </tbody>
                     <tfoot>
-                        <tr>
+                        <tr className="text-gray-800">
                             <th></th>
                             <th>Email</th>
                             <th>Type</th>

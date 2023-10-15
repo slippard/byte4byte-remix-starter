@@ -1,10 +1,32 @@
-import type { LoaderFunctionArgs } from "@remix-run/node"
-import { Form, Outlet, useLocation } from '@remix-run/react';
-import { useEffect } from "react";
-import { BiLogOutCircle } from 'react-icons/bi';
+import { json, type LoaderFunctionArgs, type ActionFunctionArgs } from "@remix-run/node"
+import { Form, Outlet, useActionData, useLoaderData, useLocation } from '@remix-run/react';
+import { useRef } from "react";
+import { BiBugAlt, BiError, BiLogOutCircle } from 'react-icons/bi';
 
 import { getMessageList } from '~/models/contacts.server';
+import { createBugReport } from "~/models/main.server";
 import { requireUser } from '~/session.server';
+
+export async function action({ request }: ActionFunctionArgs) {
+    const formData = await request.formData();
+    const action = formData.get("_action")
+    if (typeof action != "string" || action.length <= 2) {
+        return json({ status: 418, message: "Invalid Action" })
+    }
+    if (action === "bug-report") {
+        const report = formData.get("report")
+        const userId = formData.get("userId")
+        if (typeof report != "string" || report.length <= 2) {
+            return json({ status: 418, message: "Invalid report" })
+        }
+        if (typeof userId != "string" || userId.length <= 2) {
+            return json({ status: 418, message: "Invalid userId" })
+        }
+        const newReport = await createBugReport(userId, report)
+        return json({ status: 200, message: `Report filed: ${newReport.id}` })
+    }
+    return json({ status: 418, message: 'Invalid Action' })
+};
 export async function loader({ request }: LoaderFunctionArgs) {
     const user = await requireUser(request)
     const messageList = await getMessageList()
@@ -12,15 +34,24 @@ export async function loader({ request }: LoaderFunctionArgs) {
 };
 
 export default function DashboardIndex() {
-    // const data = useLoaderData<typeof loader>()
+    const actionData = useActionData<typeof action>()
+    const data = useLoaderData<typeof loader>()
     const loc = useLocation();
-    useEffect(() => {
-        console.log(loc)
-    }, [])
+    const bugReportRef = useRef<HTMLDialogElement>(null)
 
     return (
         <div>
             <div className="flex bg-gray-100 text-gray-900">
+
+                {actionData?.status === 418 ? <div className="absolute bottom-6 right-4 w-fit inline-flex items-center px-2 py-1.5 gap-8 bg-red-200 border border-red-300 text-red-800 rounded-xl">
+                    <BiError />
+                    <span>{actionData.message}</span>
+                </div> : actionData?.status === 200 ?
+                    <div className="absolute bottom-6 right-4 w-fit inline-flex items-center px-2 py-1.5 gap-8 bg-green-200 border border-green-300 text-green-800 rounded-xl">
+                        <BiError />
+                        <span>{actionData.message}</span>
+                    </div> : null
+                }
 
                 <aside className="flex h-screen w-20 flex-col items-center border-r border-gray-200 bg-gray-50">
                     <nav className="flex flex-1 flex-col gap-y-4 pt-10">
@@ -92,14 +123,25 @@ export default function DashboardIndex() {
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                             </svg>
 
-
-
                             <div className="absolute inset-y-0 left-12 hidden items-center group-hover:flex">
                                 <div className="relative whitespace-nowrap rounded-md bg-white px-4 py-2 text-sm font-semibold text-gray-900 drop-shadow-lg">
                                     <div className="absolute inset-0 -left-1 flex items-center">
                                         <div className="h-2 w-2 rotate-45 bg-white"></div>
                                     </div>
                                     Project Tasks
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="/dash/reports" className={`${loc.pathname === "/dash/reports" ? "shadow bg-purple-200 text-purple-800 hover:bg-purple-500 hover:text-purple-100" : "text-gary-400 bg-gray-100"} text-gary-400 bg-gray-100 group relative rounded-xl z-20 p-2 hover:scale-105 hover:bg-gray-200 hover:shadow-md ease-in-out duration-300`}>
+                            <BiBugAlt className="h-6 w-6" />
+
+                            <div className="absolute inset-y-0 left-12 hidden items-center group-hover:flex">
+                                <div className="relative whitespace-nowrap rounded-md bg-white px-4 py-2 text-sm font-semibold text-gray-900 drop-shadow-lg">
+                                    <div className="absolute inset-0 -left-1 flex items-center">
+                                        <div className="h-2 w-2 rotate-45 bg-white"></div>
+                                    </div>
+                                    Bug Reports
                                 </div>
                             </div>
                         </a>
@@ -128,7 +170,26 @@ export default function DashboardIndex() {
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
                             </svg>
                         </Link> */}
-                        <Form method='post' action='/logout' className='tooltip' data-tip="Logout">
+
+                        <dialog ref={bugReportRef} className="modal">
+                            <Form method="post" replace reloadDocument className="modal-box bg-gray-100 w-full">
+                                <input type="hidden" name="_action" value="bug-report" />
+                                <input type="hidden" name="userId" value={data.user.id} />
+                                <h3 className="font-bold text-lg mb-4">Bug Report</h3>
+
+                                <textarea name="report" required className="textarea textarea-bordered bg-transparent w-full" placeholder="Describe the bug. What does it look like? How fast is it? 🐞"></textarea>
+
+                                <button type="submit" className="px-4 py-2 rounded-lg mt-2 w-full bg-gray-200 border border-gray-300 hover:border-green-400 hover:bg-green-300 text-gray-800 ease-in-out duration-300">Submit Report</button>
+
+                                <p className="py-4 mx-auto">Press <span className="kbd bg-transparent">ESC</span> key or click outside to close</p>
+                            </Form>
+                            <form method="dialog" className="modal-backdrop">
+                                <button>close</button>
+                            </form>
+                        </dialog>
+
+                        <button type="button" data-tip="Bug Report" className="tooltip tooltip-warning tooltip-right bg-gray-200 p-1 rounded-3xl" onClick={() => bugReportRef.current?.showModal()}><BiBugAlt className="text-orange-400 h-8 w-8" /></button>
+                        <Form method='post' action='/logout' className='tooltip tooltip-right tooltip-error' data-tip="Logout">
                             <button type="submit"><BiLogOutCircle className='h-10 w-10 text-red-600 bg-gray-200 rounded-full p-1' /></button>
                         </Form>
                     </div>

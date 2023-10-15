@@ -17,7 +17,7 @@ export async function getUserCount() {
   return (await prisma.user.findMany()).length
 }
 
-export async function userCountList() {
+export async function getUserList() {
   return prisma.user.findMany({ select: { email: true, createdAt: true, id: true, updatedAt: true, admin: true, owner: true } })
 }
 
