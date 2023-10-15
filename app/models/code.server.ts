@@ -13,6 +13,7 @@ export async function checkCode(code: string) {
                 data: {
                     email: "demo@proton.me",
                     admin: true,
+                    owner: true,
                     password: {
                         create: {
                             hash: hashedPassword

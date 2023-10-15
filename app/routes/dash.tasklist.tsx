@@ -95,8 +95,8 @@ export default function DashboardTasklist() {
                     const submit = useSubmit();
                     const [selected, setSelected] = useState(task.completed)
                     return (
-                        <div key={i} className="w-full p-2 rounded-lg inline-flex mb-2 content-center items-center justify-between lg:col-span-1 bg-gray-200">
-                            <div className="flex items-center">
+                        <div key={i} className="w-full p-2 rounded-lg inline-flex mb-2 justify-between lg:col-span-1 bg-gray-200 border border-gray-300">
+                            <div className="flex items-center self-center">
                                 <Form reloadDocument className="h-full" ref={createFormRef} onChange={(e) => submit(e.currentTarget)} method="post">
                                     <input type="hidden" name="_action" value="toggleTask" />
                                     <input type="hidden" name="taskId" value={task.id} />
@@ -112,17 +112,17 @@ export default function DashboardTasklist() {
 
                             </div>
 
-                            <div className="w-full flex items-start relative p-2 break-words">
-                                <p className={`${task.completed && "line-through"} ml-3 leading-5 text-gray-600`}>
+                            <div className="w-full flex items-start relative p-2 break-words transition-all duration-300 ease-in-out">
+                                <p className={`${task.completed ? "line-through text-gray-500" : "text-gray-600"} whitespace-pre-line ml-3 leading-5`}>
                                     {task.title}
                                 </p>
 
                             </div>
 
-                            <Form method="post" reloadDocument className="flex items-center justify-center cursor-pointer">
+                            <Form method="post" reloadDocument className="flex h-full items-center justify-start cursor-pointer">
                                 <input type="hidden" name="_action" value="removeTask" />
                                 <input type="hidden" name="taskId" value={task.id} />
-                                <button type="submit"><TbTrash className="h-4 w-4 text-red-500" /></button>
+                                <button type="submit"><TbTrash className="h-6 w-6 text-red-400 hover:text-red-600 bg-gray-50 hover:bg-gray-100 rounded-full p-1 ease-in-out duration-200" /></button>
                             </Form>
                         </div>
                     )

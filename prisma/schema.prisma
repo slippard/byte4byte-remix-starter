@@ -8,8 +8,9 @@ generator client {
 }
 
 model User {
-  id    String @id @default(cuid())
-  email String @unique
+  id    String  @id @default(cuid())
+  owner Boolean @default(false)
+  email String  @unique
 
   admin Boolean @default(false)
 
@@ -53,7 +54,7 @@ model StylePreference {
 model Task {
   id String @id @default(cuid())
 
-  title String
+  title     String
   completed Boolean @default(false)
 
   createdAt DateTime @default(now())

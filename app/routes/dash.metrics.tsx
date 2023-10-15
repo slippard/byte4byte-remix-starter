@@ -5,7 +5,7 @@ import { requireUser } from "~/session.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
     const user = await requireUser(request)
-    const plausibleSharedLink = process.env.PLAUSIBLE_SHARED_LINK || "https://plausible.io/share/byte4byte-remix-starter.fly.dev?auth=KphzHFSWVH9EXTbDDDX3e"
+    const plausibleSharedLink = process.env.PLAUSIBLE_SHARED_LINK
     return { user, plausibleSharedLink }
 };
 
