@@ -16,6 +16,7 @@ async function seed() {
   const user = await prisma.user.create({
     data: {
       admin: true,
+      owner: true,
       email,
       password: {
         create: {

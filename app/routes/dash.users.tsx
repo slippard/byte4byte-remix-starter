@@ -108,7 +108,7 @@ export default function DashboardUsersPage() {
             }
 
             <dialog ref={newUserModal} className="modal">
-                <Form method="post" reloadDocument autoComplete="off" className="modal-box flex flex-col gap-4 bg-gray-200 border border-gray-300">
+                <Form method="post" reloadDocument autoComplete="off" className="modal-box flex flex-col gap-4 bg-gray-200 border border-gray-400">
                     <input type="hidden" name="_action" value="register-user" />
                     <input type="hidden" name="admin" value={isAdmin.toString()} />
 
@@ -194,9 +194,11 @@ export default function DashboardUsersPage() {
                                         }} />
                                 </div>
                                 <p className="absolute top-2 left-2 text-xs text-gray-400">{i + 1}</p>
-                                <p>Email: {user.email}</p>
-                                <p>Type: {user.admin ? "Administrator" : "Standard User"}</p>
-                                <p>Member Since: {new Date(user.createdAt).toDateString()}</p>
+                                {user.owner ? <p className="text-gray-900 font-bold">Owner</p> : null
+                                }
+                                <p className="text-gray-900 font-bold">Email: <span className="text-gray-700 font-thin">{user.email}</span></p>
+                                <p className="text-gray-900 font-bold">Type: <span className="text-gray-700 font-thin">{user.admin ? "Admin" : "User"}</span></p>
+                                <p className="text-gray-900 font-bold">Created: <span className="text-gray-700 font-thin">{new Date(user.createdAt).toDateString()}</span></p>
                             </div>
                         )
                     })}
@@ -253,7 +255,9 @@ export default function DashboardUsersPage() {
                                                         <Form method="post" reloadDocument className="p-2 rounded-lg bg-gray-100 shadow-md border border-gray-300">
                                                             <input type="hidden" name="_action" value="delete-user" />
                                                             <input type="hidden" name="userId" value={user.id} />
-                                                            <button type="submit" disabled={user.owner} className='w-full px-4 py-2 rounded-md bg-red-200 text-red-800 hover:bg-red-300 ease-in-out duration-300'>{user.owner ? "Cannot Remove Owner" : "Delete User"}</button>
+                                                            {user.owner ?
+                                                                <button type="submit" disabled={user.owner} className='w-full px-4 py-2 rounded-md bg-red-200 text-red-800 hover:bg-red-300 ease-in-out duration-300'>{user.owner ? "Cannot Remove Owner" : "Delete User"}</button>
+                                                                : null}
                                                         </Form>
 
                                                     </div>
