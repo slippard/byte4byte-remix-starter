@@ -18,8 +18,8 @@ function SideBar() {
                     </button>
                 </div>
 
-                <div className={`${showMenu ? "z-40 right-0" : "opacity-0 pointer-events-none z-0 right-0"} absolute bg-transparent transition-all ease-in-out duration-300`}>
-                    <div className="relative flex items-center right-0 h-screen w-[400px] bg-gray-100 opacity-90">
+                <div className={`${showMenu ? "z-40 right-0" : "w-screen opacity-0 pointer-events-none z-0 right-0"} absolute bg-transparent transition-all ease-in-out duration-300`}>
+                    <div className="relative flex items-center right-0 h-screen w-screen bg-gray-100 opacity-90">
                         <button className="absolute top-4 right-4 " onClick={() => setShowMenu(!showMenu)}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
