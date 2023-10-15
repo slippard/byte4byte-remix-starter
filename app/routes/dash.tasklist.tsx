@@ -119,7 +119,7 @@ export default function DashboardTasklist() {
 
                             </div>
 
-                            <Form method="post" reloadDocument className="flex h-full items-center justify-start cursor-pointer">
+                            <Form method="post" reloadDocument replace className="flex h-full items-center justify-start cursor-pointer">
                                 <input type="hidden" name="_action" value="removeTask" />
                                 <input type="hidden" name="taskId" value={task.id} />
                                 <button type="submit"><TbTrash className="h-6 w-6 text-red-400 hover:text-red-600 bg-gray-50 hover:bg-gray-100 rounded-full p-1 ease-in-out duration-200" /></button>
