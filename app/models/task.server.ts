@@ -15,6 +15,17 @@ export const createTask = (title: Task["title"]) => {
     })
 }
 
+export const updateTaskById = ({ id, title }: { id: string, title: string }) => {
+    return prisma.task.update({
+        data: {
+            title
+        },
+        where: {
+            id
+        }
+    })
+}
+
 export const toggleTaskCompleted = (completed: Task["completed"], id: Task["id"],) => {
     return prisma.task.update({
         where: {

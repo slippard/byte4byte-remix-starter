@@ -108,7 +108,7 @@ export default function DashboardUsersPage() {
             }
 
             <dialog ref={newUserModal} className="modal">
-                <Form method="post" reloadDocument autoComplete="off" className="modal-box flex flex-col gap-4 bg-gray-100 border border-gray-400">
+                <Form method="post" reloadDocument autoComplete="off" className="modal-box flex flex-col gap-4 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 border border-gray-400">
                     <input type="hidden" name="_action" value="register-user" />
                     <input type="hidden" name="admin" value={isAdmin.toString()} />
 
@@ -133,7 +133,7 @@ export default function DashboardUsersPage() {
 
                     <div className="form-control">
                         <label className="cursor-pointer label">
-                            <span className="label-text text-gray-800">Administrator</span>
+                            <span className="label-text text-gray-800 dark:text-gray-200">Administrator</span>
                             <input type="checkbox" checked={isAdmin} onChange={() => setIsAdmin(!isAdmin)} className="checkbox checkbox-success" />
                         </label>
                     </div>
@@ -153,7 +153,7 @@ export default function DashboardUsersPage() {
                 <div className="flex flex-col gap-4 md:hidden w-full col-span-12">
                     {data.userList.map((user, i) => {
                         return (
-                            <div className="relative flex flex-col w-full bg-gray-200 border border-gray-300 rounded-lg p-6" key={i}>
+                            <div className="relative flex flex-col w-full bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 border border-gray-300 rounded-lg p-6" key={i}>
                                 <div className="absolute top-2 right-2">
                                     <ActionModal
                                         title={`Manage ${user.email}`}
@@ -161,7 +161,7 @@ export default function DashboardUsersPage() {
                                             return (
                                                 <div className="flex flex-col gap-2">
 
-                                                    <Form method="post" className="p-2 rounded-lg bg-gray-100 shadow-md border border-gray-300">
+                                                    <Form method="post" className="p-2 rounded-lg bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 shadow-md border border-gray-300">
                                                         <input type="hidden" name="_action" value="update-password" />
                                                         <input type="hidden" name="userId" value={user.id} />
 
@@ -183,7 +183,7 @@ export default function DashboardUsersPage() {
                                                         <button type="submit" className='w-full px-4 py-2 rounded-md bg-green-200 border border-green-300 text-green-800 hover:bg-green-300 ease-in-out duration-300'>Update Password</button>
                                                     </Form>
 
-                                                    <Form method="post" reloadDocument className="p-2 rounded-lg bg-gray-100 shadow-md border border-gray-300">
+                                                    <Form method="post" reloadDocument className="p-2 rounded-lg bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 shadow-md border border-gray-300">
                                                         <input type="hidden" name="_action" value="delete-user" />
                                                         <input type="hidden" name="userId" value={user.id} />
                                                         <button type="submit" disabled={user.owner} className='w-full px-4 py-2 rounded-md bg-red-200 text-red-800 hover:bg-red-300 ease-in-out duration-300'>{user.owner ? "Cannot Remove Owner" : "Delete User"}</button>
@@ -206,7 +206,7 @@ export default function DashboardUsersPage() {
 
                 <table className="hidden md:table table-xs border border-gray-400 rounded-lg">
                     <thead>
-                        <tr className="text-gray-800">
+                        <tr className="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
                             <th></th>
                             <th>Email</th>
                             <th>Type</th>
@@ -218,7 +218,7 @@ export default function DashboardUsersPage() {
                         {data.userList.map((user, i) => {
                             const [showPass, setShowPass] = useState(false)
                             return (
-                                <tr key={i} className='bg-gray-200 hover:bg-gray-300'>
+                                <tr key={i} className='bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 hover:dark:bg-gray-600 ease-in-out duration-200'>
                                     <th>{i + 1}</th>
                                     <td>{user.email}</td>
                                     <td>{user.admin ? "Administrator" : "Standard"}</td>
@@ -228,9 +228,9 @@ export default function DashboardUsersPage() {
                                             title={`Manage ${user.email}`}
                                             content={() => {
                                                 return (
-                                                    <div className="flex flex-col gap-2">
+                                                    <div className="flex flex-col gap-2 ">
 
-                                                        <Form method="post" className="p-2 rounded-lg bg-gray-100 shadow-md border border-gray-300">
+                                                        <Form method="post" className="p-2 rounded-lg bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 shadow-md border border-gray-300 dark:border-gray-700">
                                                             <input type="hidden" name="_action" value="update-password" />
                                                             <input type="hidden" name="userId" value={user.id} />
 
@@ -253,12 +253,12 @@ export default function DashboardUsersPage() {
                                                         </Form>
 
                                                         {user.owner ?
-                                                            <Form method="post" reloadDocument className="p-2 rounded-lg bg-gray-100 shadow-md border border-gray-300">
+                                                            <Form method="post" reloadDocument className="p-2 rounded-lg bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 shadow-md border border-gray-300 dark:border-gray-700">
                                                                 <input type="hidden" name="_action" value="delete-user" />
                                                                 <button type="submit" disabled={user.owner} className='w-full px-4 py-2 rounded-md bg-red-200 text-red-800 hover:bg-red-300 ease-in-out duration-300'>{user.owner ? "Cannot Remove Owner" : "Delete User"}</button>
                                                                 <input type="hidden" name="userId" value={user.id} />
                                                             </Form>
-                                                            : <Form method="post" reloadDocument className="p-2 rounded-lg bg-gray-100 shadow-md border border-gray-300">
+                                                            : <Form method="post" reloadDocument className="p-2 rounded-lg bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 shadow-md border border-gray-300 dark:border-gray-700">
                                                                 <input type="hidden" name="_action" value="delete-user" />
                                                                 <button type="submit" disabled={user.owner} className='w-full px-4 py-2 rounded-md bg-red-200 text-red-800 hover:bg-red-300 ease-in-out duration-300'>{user.owner ? "Cannot Remove Owner" : "Delete User"}</button>
                                                                 <input type="hidden" name="userId" value={user.id} />
@@ -273,7 +273,7 @@ export default function DashboardUsersPage() {
                         })}
                     </tbody>
                     <tfoot>
-                        <tr className="text-gray-800">
+                        <tr className="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
                             <th></th>
                             <th>Email</th>
                             <th>Type</th>
@@ -295,7 +295,7 @@ const ActionModal = ({ content, title }: { title: string, content: () => JSX.Ele
                 <BiCog className="h-4 w-4" />
             </button>
             <dialog ref={modalRef} className="modal">
-                <div className="modal-box w-fit bg-gray-200">
+                <div className="modal-box w-fit bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200">
                     <h3 className="font-bold text-lg">{title}</h3>
                     <p className="pb-4">Press ESC key or click outside to close</p>
                     <div className='w-full'>
