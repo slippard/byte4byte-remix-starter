@@ -48,7 +48,7 @@ export default function DashboardMetricsPage() {
             borderColor: "rgba(55,65,81,0.2)"
         },
         title: {
-            text: `${new Date().toLocaleString('default', { month: "long" })} Traffic on byte4byte-remix-starter.fly.dev`,
+            text: `${new Date().toLocaleString('default', { month: "long" })} Traffic - byte4byte-remix-starter.fly.dev`,
         },
         credits: {
             enabled: false,

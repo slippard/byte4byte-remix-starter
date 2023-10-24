@@ -59,7 +59,6 @@ export default function DashboardBugreport() {
             <div className="w-full grid grid-cols-12 gap-2">
                 {data.reportList.filter(r => !r.resolved).map((report, i) => {
                     const reportee = data.userList.filter((user => user.id === report.userId))[0]
-                    console.log(`Reported by: ${reportee.email}`)
                     return (
                         <div key={i} className="flex flex-col gap-2 p-2 justify-between h-full col-span-12 md:col-span-6 xl:col-span-4 bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-lg border border-gray-300 dark:border-gray-700">
                             <p className="text-xs text-gray-800">ID: {report.id}</p>
@@ -86,7 +85,6 @@ export default function DashboardBugreport() {
                 </div>
                 {data.reportList.filter(r => r.resolved).map((report, i) => {
                     const reportee = data.userList.filter((user => user.id === report.userId))[0]
-                    console.log(`Reported by: ${reportee.email}`)
                     return (
                         <div key={i} className="flex flex-col gap-2 p-2 justify-between h-full col-span-12 md:col-span-6 xl:col-span-4 bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-lg border border-gray-300 dark:border-gray-700">
                             <p className="text-xs text-gray-800">ID: {report.id}</p>

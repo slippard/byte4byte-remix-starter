@@ -110,7 +110,7 @@ export default function DashboardTasklist() {
                     {data.taskList.filter((task) => !task.completed).map((task, i) => {
                         const editModelRef = useRef<HTMLDialogElement>(null)
                         return (
-                            <div key={i} className="relative w-full py-4 px-2 rounded-lg flex flex-col gap-4 bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 border border-gray-700">
+                            <div key={i} className="relative w-full py-4 px-2 rounded-lg flex flex-col gap-4 bg-gray-200 dark:bg-gray-900 text-gray-800 dark:text-gray-200 border border-gray-700">
 
                                 {/* <div className="absolute top-2 left-2">
                                     <FaExclamationCircle className="text-gray-200 h-6 w-6 opacity-10" />
@@ -193,15 +193,6 @@ export default function DashboardTasklist() {
                     })}
                 </div>
             </div>
-
-            <aside className="bg-transparent border border-gray-800 w-full p-4 flex flex-col gap-4 md:w-80">
-                <h1 className="text-xl font-mono text-center">Shortcuts</h1>
-
-                <div className="inline-flex flex-wrap gap-2 break-words justify-center items-center">
-                    <div className="border border-gray-700 rounded-lg px-2 py-1.5"><kbd className="kbd kbd-sm bg-gray-800">Shift + N</kbd> Create Task</div>
-                </div>
-            </aside>
-
 
         </div>
     );

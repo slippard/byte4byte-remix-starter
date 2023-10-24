@@ -174,7 +174,7 @@ export default function DashboardIndex() {
                         </Link> */}
 
                         <dialog ref={bugReportRef} className="modal">
-                            <Form method="post" replace reloadDocument className="modal-box bg-gray-100 w-full">
+                            <Form method="post" replace reloadDocument className="modal-box bg-gray-100 dark:bg-gray-800 w-full">
                                 <input type="hidden" name="_action" value="bug-report" />
                                 <input type="hidden" name="userId" value={data.user.id} />
                                 <h3 className="font-bold text-lg mb-4">Bug Report</h3>
@@ -190,9 +190,9 @@ export default function DashboardIndex() {
                             </form>
                         </dialog>
 
-                        <button type="button" data-tip="Bug Report" className="tooltip tooltip-warning tooltip-right bg-gray-200 p-1 rounded-3xl" onClick={() => bugReportRef.current?.showModal()}><BiBugAlt className="text-orange-400 h-8 w-8" /></button>
+                        <button type="button" data-tip="Bug Report" className="tooltip tooltip-warning tooltip-right bg-gray-200 dark:bg-gray-800 p-1 rounded-3xl" onClick={() => bugReportRef.current?.showModal()}><BiBugAlt className="text-orange-400 h-8 w-8" /></button>
                         <Form method='post' action='/logout' className='tooltip tooltip-right tooltip-error' data-tip="Logout">
-                            <button type="submit"><BiLogOutCircle className='h-10 w-10 text-red-600 bg-gray-200 rounded-full p-1' /></button>
+                            <button type="submit"><BiLogOutCircle className='h-10 w-10 text-red-600 bg-gray-200 dark:bg-gray-800 rounded-full p-1' /></button>
                         </Form>
                     </div>
                 </aside>
