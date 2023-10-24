@@ -4,7 +4,7 @@ I've seen many small businesses struggle to bend website builders into something
 
 This stack offers a solution that should be simple enough to deploy a simple application with potentially advanced features without breaking the bank. The data collected is easily accessed and owned by you. Within the tier parameters, you can get away with only paying about $5/mo for the object storage, and even that is technically optional if you'd rather [rely on fly volume storage](https://fly.io/docs/apps/scale-count/#scale-an-app-with-volumes) which isn't typically recommended unless you're ready to manually back up & restore the database. If you already own your domain, have access to its DNS, and your Fly app incurs under $5 usage, it's written off as a free hobby project. The project grows in cost as the flow of data and users increases within the app, allowing for a much lower entry cost and an easy entry point for various developers to start with and branch off in different directions. It allows the business to invest their money into a design that matches their style and components that enhance their daily workload.
 
-[View Demo](byte4byte-remix-starter.fly.dev)
+[View Demo](https://byte4byte-remix-starter.fly.dev)
 
 ```sh
 email: demo@proton.me
