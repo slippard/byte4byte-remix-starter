@@ -25,7 +25,7 @@ password: demopass
 - Component styling with [DaisyUI](https://daisyui.com/components/)
 - Additional Components  with [HeadlessUI](https://headlessui.com)
 - Additional Icons From [React Icons](https://react-icons.github.io/react-icons/)
-- [HeroIcons](https://heroicons.com/) Additional SVG Library 
+- [HeroIcons](https://heroicons.com/) Additional SVG Library
 - Local third party request mocking with [MSW](https://mswjs.io)
 - Unit testing with [Vitest](https://vitest.dev) and [Testing Library](https://testing-library.com)
 - Code formatting with [Prettier](https://prettier.io)
@@ -62,7 +62,7 @@ The database seed script creates a new user with some data you can use to get st
 - Email: `demo@proton.me`
 - Password: `demopass`
 
-### Relevant code:
+### Relevant code
 
 - creating users, and logging in and out [./app/models/user.server.ts](./app/models/user.server.ts)
 - user sessions, and verifying them [./app/session.server.ts](./app/session.server.ts)
@@ -119,7 +119,7 @@ Prior to your first deployment, you'll need to do a few things:
   fly secrets set PLAUSIBLE_SHARED_LINK=your-shared-link
   ```
 
-  You can view your shared links in your plausible dashboard here: https://plausible.io/example.com/settings/visibility.
+  You can view your shared links in your plausible dashboard here: <https://plausible.io/example.com/settings/visibility>.
 
 - Create a persistent volume for the sqlite database for both your staging and production environments. Run the following:
 
