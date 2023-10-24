@@ -8,12 +8,14 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "@remix-run/react";
 
 import { getUser } from "~/session.server";
 
 import mainStyles from './styles/main.css'
 import stylesheet from "./styles/tailwind.css";
+import { isDev } from "./utils";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -22,10 +24,13 @@ export const links: LinksFunction = () => [
 ];
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  return json({ user: await getUser(request) });
+  const user = await getUser(request)
+  const dev = isDev()
+  return json({ user, dev })
 };
 
 export default function App() {
+  const data = useLoaderData<typeof loader>()
   return (
     <html lang="en" className="h-full">
       <head>
@@ -48,7 +53,10 @@ export default function App() {
         <link rel="manifest" href="https://nyc3.digitaloceanspaces.com/slippard/assets/manifest.json" />
 
         {/* Plausible script */}
-        <script defer data-domain="byte4byte-remix-starter.fly.dev" src="https://plausible.io/js/script.js"></script>
+        {data.dev ? null :
+          <script defer data-domain="byte4byte-remix-starter.fly.dev" src="https://plausible.io/js/script.js"></script>
+        }
+
         <Meta />
         <Links />
       </head>
