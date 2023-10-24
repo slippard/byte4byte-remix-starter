@@ -1,8 +1,15 @@
-# byte4byte-remix-starter
+# byte4byte-remix-starter.fly.dev
 
-I've seen many small businesses struggle to bend website builders into something that can represent their brand, but it nearly always falls short. Simply because a website builder can't be **made for your company** when it's **built to work for every company**. They obviously need to cater to many industries, and therefore it's challenging to meet each individual business's needs. Many companies need to upload files, but how they choose to encrypt, store, backup, etc. traditionally lies with the company they pay huge amounts of money to that claims to secure their data.
+I've seen many small businesses struggle to bend website builders into something that can represent their brand, nearly always falling short. Simply because a website builder can't be **made for your company** when it's **built to work for every company**. Many companies need to upload files, but how they choose to encrypt, store, or backup data traditionally lies with the company they pay huge amounts of money to that claims to secure their data.
 
-This stack offers a solution that should be simple enough to deploy  a simple application with potentially advanced features without breaking the bank. The data collected is easily accessed and owned by you. Within the tier parameters, you can get away with only paying about $5/mo for the object storage, and even that is technically optional if you'd rather [rely on fly volume storage](https://fly.io/docs/apps/scale-count/#scale-an-app-with-volumes) which isn't typically recommended unless you're ready to manually back up & restore the database. If you already own your domain, have access to its DNS, and your Fly app incurs under $5 usage, it's written off as a free hobby project. The project grows in cost as the flow of data and users increases within the app, allowing for a much lower entry cost and an easy entry point for various developers to start with and branch off in different directions. It allows the business to invest their money into a design that matches their style and components that enhance their daily workload.
+This stack offers a solution that should be simple enough to deploy a simple application with potentially advanced features without breaking the bank. The data collected is easily accessed and owned by you. Within the tier parameters, you can get away with only paying about $5/mo for the object storage, and even that is technically optional if you'd rather [rely on fly volume storage](https://fly.io/docs/apps/scale-count/#scale-an-app-with-volumes) which isn't typically recommended unless you're ready to manually back up & restore the database. If you already own your domain, have access to its DNS, and your Fly app incurs under $5 usage, it's written off as a free hobby project. The project grows in cost as the flow of data and users increases within the app, allowing for a much lower entry cost and an easy entry point for various developers to start with and branch off in different directions. It allows the business to invest their money into a design that matches their style and components that enhance their daily workload.
+
+[View Demo](byte4byte-remix-starter.fly.dev)
+
+```sh
+email: demo@proton.me
+password: demopass
+```
 
 ## What's in the stack
 
@@ -77,8 +84,8 @@ Prior to your first deployment, you'll need to do a few things:
 - Create two apps on Fly, one for staging and one for production:
 
   ```sh
-  fly apps create remix-rental
-  fly apps create remix-rental-staging
+  fly apps create appname
+  fly apps create appname-staging
   ```
 
   > **Note:** Make sure this name matches the `app` set in your `fly.toml` file. Otherwise, you will not be able to deploy.
@@ -100,8 +107,8 @@ Prior to your first deployment, you'll need to do a few things:
 - Add a `SESSION_SECRET` to your fly app secrets, to do this you can run the following commands:
 
   ```sh
-  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app remix-rental
-  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app remix-rental-staging
+  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app appname
+  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app appname-staging
   ```
 
   If you don't have openssl installed, you can also use [1Password](https://1password.com/password-generator) to generate a random secret, just replace `$(openssl rand -hex 32)` with the generated secret.
@@ -117,8 +124,8 @@ Prior to your first deployment, you'll need to do a few things:
 - Create a persistent volume for the sqlite database for both your staging and production environments. Run the following:
 
   ```sh
-  fly volumes create data --size 1 --app remix-rental
-  fly volumes create data --size 1 --app remix-rental-staging
+  fly volumes create data --size 1 --app appname
+  fly volumes create data --size 1 --app appname-staging
   ```
 
 Now that everything is set up you can commit and push your changes to your repo. Every commit to your `main` branch will trigger a deployment to your production environment, and every commit to your `dev` branch will trigger a deployment to your staging environment.
