@@ -8,7 +8,6 @@ import { FaBrain, FaSpellCheck, FaMousePointer } from 'react-icons/fa'
 import { GrUserAdmin } from 'react-icons/gr'
 import { HiUserGroup } from 'react-icons/hi'
 import { HiMiniServerStack } from 'react-icons/hi2'
-import { MdWarning } from 'react-icons/md'
 import { TbArrowBounce } from 'react-icons/tb'
 
 
@@ -75,13 +74,6 @@ export default function DashboardMetricsPage() {
 
     return (
         <div className="w-full max-w-[100vw] h-screen flex flex-col overflow-hidden overflow-y-scroll py-8">
-
-            <div className="w-full px-2 md:px-8 max-w-7xl">
-                <div className="w-full grid grid-cols-12 items-center px-4 py-2 gap-4 bg-yellow-200 border border-yellow-300 rounded-lg">
-                    <MdWarning className="col-span-1 text-yellow-900 h-6 w-6" />
-                    <p className="text-yellow-900 col-span-11">This is a live demo to showcase the current features of the apps. As features are added, bugs may be introduced. If you run into an error, try refreshing the page, or report a bug.</p>
-                </div>
-            </div>
 
             <div className={`mt-10 w-full max-w-7xl px-2 md:px-8`}>
                 <HighchartsReact
