@@ -1,6 +1,5 @@
 import { cssBundleHref } from "@remix-run/css-bundle";
 import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -24,9 +23,10 @@ export const links: LinksFunction = () => [
 ];
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const user = await getUser(request)
+  const user = await getUser(request);
   const dev = isDev()
-  return json({ user, dev })
+  const gaTrackingId = 'G-XXXXXXXXXX'
+  return { user, dev, gaTrackingId };
 };
 
 export default function App() {
@@ -61,6 +61,29 @@ export default function App() {
         <Links />
       </head>
       <body className="h-full spectral">
+        {data.dev ? null :
+          <>
+            <script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${data.gaTrackingId}`}
+            />
+            <script
+              async
+              id="gtag-init"
+              dangerouslySetInnerHTML={{
+                __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+
+                gtag('config', '${data.gaTrackingId}', {
+                  page_path: window.location.pathname,
+                });
+              `,
+              }}
+            />
+          </>
+        }
         <Outlet />
         <ScrollRestoration />
         <Scripts />
